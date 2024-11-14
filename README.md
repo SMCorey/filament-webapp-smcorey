@@ -56,7 +56,7 @@ This project is a web application with a backend built using Node.js and Express
    - Inserted 10 sample products into the products table.
    - Saved sample product images in `./public` folder:
      - Filenames follow the format `pic1.jpg`, `pic2.jpg`, etc.
-     - Each image was resized to a consistent 4:3 aspect ratio.
+     - Each image was resized to a consistent aspect ratio.
 
 ---
 

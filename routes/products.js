@@ -19,7 +19,7 @@ router.get("/all", async (req, res, next) => {
 
 
   // Get a unit by id
-router.get("/get/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
     const id = req.params.id;
   
    // validate if ID is a number
@@ -30,7 +30,7 @@ router.get("/get/:id", async (req, res) => {
   
     const product = await prisma.Products.findUnique({
       where: {
-        id: parseInt(id),
+        product_id: parseInt(id),
       }
     });
   
