@@ -12,7 +12,7 @@ This project is a web application with a backend built using Node.js and Express
    - Set up the Express server and initial project structure.
 
 2. **Routing**:
-   - Created routes to manage user sessions and products.
+   - Create routes to manage user sessions and products.
    - **Users Route** (`/users`):
      - **Signup**: Handles `POST` requests at `/users/signup` to register new users.
      - **Login**: Handles `POST` requests at `/users/login` to authenticate users.
@@ -24,7 +24,7 @@ This project is a web application with a backend built using Node.js and Express
      - **Purchase**: Placeholder route for future purchase functionality.
 
 3. **Database Setup with Prisma**:
-   - Installed and configured Prisma for SQLite database.
+   - Installed and configure Prisma for SQLite database.
    - Created database models for `Product` and `Customer` with the following schemas:
      - **Product**:
        - `product_id`: Integer, primary key.
@@ -41,20 +41,20 @@ This project is a web application with a backend built using Node.js and Express
    - Executed Prisma migration to create database tables for these models.
 
 4. **User Signup**:
-   - Implemented a `POST` route at `/users/signup` to handle user registration.
-   - Validates input to ensure no fields are blank.
+   - Implemente a `POST` route at `/users/signup` to handle user registration.
+   - Validate input to ensure no fields are blank.
    - Uses `bcrypt` to hash passwords before saving them to the database for security.
 
 5. **User Login (Partial)**:
-   - Implemented a `POST` route at `/users/login` for basic user login.
-   - Validates email and password fields are not blank.
+   - Implemente a `POST` route at `/users/login` for basic user login.
+   - Validate email and password fields are not blank.
    - Checks email and password validity:
      - Returns email on successful login.
      - Returns appropriate error codes for login failures (e.g., 404 if not found, 401 for unauthorized access).
 
 6. **Products Data Seeding**:
-   - Inserted 10 sample products into the products table.
-   - Saved sample product images in `./public` folder:
+   - Insert 10 sample products into the products table.
+   - Save sample product images in `./public` folder:
      - Filenames follow the format `pic1.jpg`, `pic2.jpg`, etc.
      - Each image was resized to a consistent aspect ratio.
 
@@ -83,7 +83,6 @@ This project is a web application with a backend built using Node.js and Express
 
 - Use `npm start` to start the Express server.
 
----
 
 ## Testing and Verification
 
