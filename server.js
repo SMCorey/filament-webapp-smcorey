@@ -5,6 +5,7 @@ import usersRouter from './routes/users.js';
 import homeRouter from './routes/home.js';
 import productsRouter from './routes/products.js';
 
+
 const port = process.env.PORT || 3000;
 const app = express();
 // middleware
@@ -14,7 +15,6 @@ app.use(express.static('public'));
 
 // cors middleware
 app.use(cors({
-  origin: '*', // react client
   credentials: true // allow cookies
 }));
 
