@@ -18,11 +18,11 @@ router.get("/all", async (req, res, next) => {
   res.json(products);
 });
 
-// Get a unit by id
+// GET BY ID
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
 
-  // validate if ID is a number
+  // VALIDATE ID IS #
   if (isNaN(id)) {
     res.status(400).json({ message: "Invalid ID" });
     return;
@@ -45,7 +45,7 @@ router.post("/purchase", async (req, res) => {
     return res.status(401).send('Cannot Process Transaction, not logged in.');
   }
 
-  // Extract inputs from request body
+  // EXTRACT INPUT FROM BODY
   const {
     street,
     city,
@@ -61,7 +61,7 @@ router.post("/purchase", async (req, res) => {
     invoice_total,
   } = req.body;
 
-  // Validate required fields
+  // VALIDATE INCLUSION
   if (
     !street ||
     !city ||
@@ -79,16 +79,16 @@ router.post("/purchase", async (req, res) => {
     return res.status(400).send("Missing required purchase field(s).");
   }
 
-  // Validate the cart
+  // VALIDATE CART
   const productIds = cart.split(",").map(Number);
   if (productIds.some(isNaN)) {
     return res.status(400).send("Invalid cart format.");
   }
 
-  // Retrieve the user ID from session
+  // GET USER ID FROM SESSION
   const userId = req.session.user_id;
 
-  // Step 1: Create the purchase
+  // CREATE PURCHASE
   const newPurchase = await prisma.Purchase.create({
     data: {
       customer_id: userId,
@@ -133,7 +133,7 @@ router.post("/purchase", async (req, res) => {
     )
   );
 
-  // Respond with the created purchase details
+  // RESPONSE
   res.status(201).json({
     message: "Purchase completed successfully.",
     purchase: newPurchase,
