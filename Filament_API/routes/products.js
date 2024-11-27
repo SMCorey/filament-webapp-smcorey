@@ -12,7 +12,7 @@ const prisma = new PrismaClient();
 //     log: ["query", "info", "warn", "error"],
 //   });
 
-// Get all units
+// GET ALL PRODUCTS
 router.get("/all", async (req, res, next) => {
   const products = await prisma.Products.findMany();
   res.json(products);
