@@ -5,6 +5,8 @@ import Card from "/src/ui/Card.jsx";
 export default function Home() {
   const apiHost = import.meta.env.VITE_API_HOST;
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true); // Track loading state
+  const [error, setError] = useState(null); // Track error state
 
   // const apiUrl = "http://localhost:3000/api/products/all";
   const apiUrl = apiHost + "api/products/all";
@@ -12,16 +14,23 @@ export default function Home() {
   // FETCH ALL PRODUCT DATA
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(apiUrl);
-
-      if (response.ok) {
-        const data = await response.json();
-        // console.log(data);
-        if (!ignore) {
-          setProducts(data);
+      try {
+        const response = await fetch(apiUrl);
+  
+        if (!response.ok) {
+          // Log the error and provide feedback without throwing
+          console.error(`Fetch failed with status: ${response.status}`);
+          setError("Failed to load products. Please try again later.");
+          return;
         }
-      } else {
-        setProducts(null);
+  
+        const data = await response.json();
+        setProducts(data);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError("An error occurred while loading products.");
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -33,6 +42,10 @@ export default function Home() {
       ignore = true;
     };
   }, []);
+
+    // LOADING OR ERROR RETURNS
+    if (loading) return <p>Loading Products...</p>;
+    if (error) return <p>Error: {error}</p>;
 
   return (
     <>

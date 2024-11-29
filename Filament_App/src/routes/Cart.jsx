@@ -6,15 +6,14 @@ export default function Cart() {
   const { getCart } = useCartCookie();
   const [cart, setCart] = useState([]);
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const taxRate = 0.15;
+  const [loading, setLoading] = useState(true); // Track loading state
+  const [error, setError] = useState(null); // Track error state
+  const taxRate = 0.15; // Tax rate
 
   const apiHost = import.meta.env.VITE_API_HOST;
 
-  // 
+  // GET CART COOKIE
   useEffect(() => {
-    // GET CART COOKIE
     const cartCookie = getCart();
     // console.log(cartCookie);
 
@@ -33,7 +32,7 @@ export default function Cart() {
     // console.log(consolidatedCart);
   }, []);
 
-  //
+  // FETCH PRODUCT DATA
   useEffect(() => {
     // IN CASE NO ITEMS IN CART
     if (cart.length === 0) {
@@ -47,30 +46,32 @@ export default function Cart() {
     async function fetchProducts() {
       try {
         const productRequests = cart.map((item) =>
-          fetch(`${apiHost}api/products/${item.product_id}`).then(
-            (response) => {
-              if (!response.ok) throw new Error("Failed to fetch product data");
-              return response.json();
+          fetch(`${apiHost}api/products/${item.product_id}`).then((response) => {
+            if (!response.ok) {
+              setError(
+                `Failed to fetch product with ID: ${item.product_id}. Status: ${response.status}`
+              );
+              return;
             }
-          )
+            return response.json();
+          })
         );
+
         const productData = await Promise.all(productRequests);
-        console.log("productData");
-        console.log(productData);
 
         // COMBINE PRODUCT DATA AND CART QUANTITIES
         const fullCart = productData.map((product, index) => ({
           ...product,
-          cost: parseFloat(product.cost) || 0,
+          cost: parseFloat(product.cost) || 0, // Ensure cost is a number
           quantity: cart[index].quantity,
         }));
 
         // console.log("fullCart");
         // console.log(fullCart);
         setProducts(fullCart);
-
       } catch (err) {
-        setError(err.message || "An error occurred");
+        console.error("Error fetching products:", err);
+        setError("An error occurred while fetching products.");
       } finally {
         setLoading(false);
       }
@@ -79,6 +80,10 @@ export default function Cart() {
     fetchProducts();
   }, [cart]);
 
+  // LOADING OR ERROR RETURNS
+  if (loading) return <p>Loading cart...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   // CALC TOTALS & TAX
   const subtotal = products.reduce(
     (acc, product) => acc + product.quantity * product.cost,
@@ -86,10 +91,6 @@ export default function Cart() {
   );
   const tax = subtotal * taxRate;
   const total = subtotal + tax;
-
-  // LOADING OR ERROR RETURNS
-  if (loading) return <p>Loading cart...</p>;
-  if (error) return <p>Error: {error}</p>;
 
   // console.log("products");
   // console.log(products);
@@ -111,7 +112,7 @@ export default function Cart() {
                     className="img-thumbnail"
                     style={{ width: "225px", height: "auto", margin: "15px" }}
                     alt={"Image of " + product.name}
-                />
+                  />
                   <p className="card-text">Price: ${product.cost.toFixed(2)}</p>
                   <p className="card-text">Quantity: {product.quantity}</p>
                   <p className="card-text">
@@ -127,11 +128,11 @@ export default function Cart() {
       )}
       {/* TAX & TOTALS */}
       <div>
-      <hr />
-      <h5 className="card-title">Sub-Total: ${subtotal.toFixed(2)}</h5>
-      <h5 className="card-title">Tax: ${tax.toFixed(2)}</h5>
-      <h5 className="card-title">Total: ${total.toFixed(2)}</h5>
-      <Link to="/checkout">Checkout</Link> <br />
+        <hr />
+        <h5 className="card-title">Sub-Total: ${subtotal.toFixed(2)}</h5>
+        <h5 className="card-title">Tax: ${tax.toFixed(2)}</h5>
+        <h5 className="card-title">Total: ${total.toFixed(2)}</h5>
+        <Link to="/checkout">Checkout</Link> <br />
       </div>
     </div>
   );
