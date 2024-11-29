@@ -1,3 +1,5 @@
+// CART COOKIE UTILITY FUNCTIONS
+
 import { useCookies } from 'react-cookie';
 
 export const useCartCookie = () => {

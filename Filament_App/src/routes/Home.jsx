@@ -1,28 +1,22 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Card from "../UI/Card";
-import { useCookies } from 'react-cookie';
+import Card from "/src/ui/Card.jsx";  
 
 export default function Home() {
   const apiHost = import.meta.env.VITE_API_HOST;
+  const [products, setProducts] = useState([]);
 
   // const apiUrl = "http://localhost:3000/api/products/all";
   const apiUrl = apiHost + "api/products/all";
 
-
-
-
-
-
-  // Get from API -> Trigger React state change
+  // FETCH ALL PRODUCT DATA
   useEffect(() => {
-    // Fetch data from API
     async function fetchData() {
       const response = await fetch(apiUrl);
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         if (!ignore) {
           setProducts(data);
         }
@@ -38,13 +32,14 @@ export default function Home() {
     return () => {
       ignore = true;
     };
-  }, []); // run only once
+  }, []);
 
   return (
     <>
       <div className="bg-dark text-white min-vh-100">
         <h1 className="text-center fw-bold">Filaments</h1>
         <div className="row row-cols-1 row-cols-md-2 g-2">
+          {/* DISPLAY CARDS FOR ALL PRODUCTS */}
           {products.length > 0 ? (
             products.map((product) => (
               <div className="col">
