@@ -11,7 +11,7 @@ export default function Card(props) {
                 <img
                     src={`${props.apiHost}${props.product.image_filename}`}
                     className="img-thumbnail"
-                    style={{ width: "250px", height: "auto", margin: "15px" }}
+                    style={{ width: "225px", height: "auto", margin: "15px" }}
                     alt={"Image of " + props.product.name}
                 />
             </Link>

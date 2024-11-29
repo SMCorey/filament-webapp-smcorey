@@ -39,11 +39,6 @@ export default function Home() {
     <>
       <div className="bg-dark text-white min-vh-100">
         <h1 className="text-center fw-bold">Filaments</h1>
-        <div className="d-flex justify-content-center mb-4">
-          <Link to="/create" className="btn btn-warning">
-            Add New Unit
-          </Link>
-        </div>
         <div className="row row-cols-1 row-cols-md-2 g-2">
           {products.length > 0 ? (
             products.map((product) => (

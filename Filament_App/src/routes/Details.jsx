@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 export default function Details() {
@@ -43,7 +43,7 @@ export default function Details() {
   }
 
   return (
-    <div>
+    <div className="mt-2 mb-2 mx-2 card-shadow bg-secondary text-white d-flex align-items-center position-relative">
       <img
         src={`${apiHost}${product.image_filename}`}
         className="img-thumbnail"
@@ -53,6 +53,14 @@ export default function Details() {
       <h1>{product.name}</h1>
       <p>Price: ${product.cost}</p>
       <p>Description: {product.description}</p>
+
+      <div>
+        <Link to={"/"}>Add to Cart</Link>
+      </div>
+      <div>
+        <Link to={"/"}>Go Back</Link>
+      </div>
+
     </div>
   );
 }
