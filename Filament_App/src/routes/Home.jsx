@@ -1,13 +1,18 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Card from "../UI/Card";
+import { useCookies } from 'react-cookie';
 
 export default function Home() {
-  const [products, setProducts] = useState([]); // initialize as empty array
   const apiHost = import.meta.env.VITE_API_HOST;
 
   // const apiUrl = "http://localhost:3000/api/products/all";
   const apiUrl = apiHost + "api/products/all";
+
+
+
+
+
 
   // Get from API -> Trigger React state change
   useEffect(() => {
