@@ -10,8 +10,8 @@ import Details from './routes/Details.jsx'
 import Login from './routes/Login.jsx'
 import Logout from './routes/Logout.jsx'
 import Signup from './routes/Signup.jsx'
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 
 const router = createBrowserRouter([

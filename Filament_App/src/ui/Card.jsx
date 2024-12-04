@@ -2,51 +2,40 @@ import { Link } from "react-router-dom";
 
 export default function Card(props) {
   return (
-    <div className="card mt-2 mb-2 mx-2 card-shadow bg-secondary text-white">
-      <div className="card-body">
-        <div className="d-flex align-items-center position-relative">
+    <div className="card shadow-sm h-100">
+      {/* Entire card wrapped in Link */}
+      <Link
+        to={`/details/${props.product.product_id}`}
+        className="text-decoration-none"
+        style={{ color: "inherit" }} // Prevent blue link styling / inherits text details from card
+      >
+        {/* Image Section */}
+        <img
+          src={`${props.apiHost}${props.product.image_filename}`}
+          className="card-img-top"
+          style={{ objectFit: "cover", maxHeight: "200px" }}
+          alt={`Image of ${props.product.name}`}
+        />
 
-          {/* IMAGE */}
-            <Link to={`/details/${props.product.product_id}`} >
-                <img
-                    src={`${props.apiHost}${props.product.image_filename}`}
-                    className="img-thumbnail"
-                    style={{ width: "225px", height: "auto", margin: "15px" }}
-                    alt={"Image of " + props.product.name}
-                />
-            </Link>
-          {/* CARD DATA */}
-          <div className="product-info overflow-auto">
-            <Link to={`/details/${props.product.product_id}`} >
-                <h5 className="card-title">{props.product.name}</h5>
-            </Link> 
-            <p className="card-text">
-              Cost: ${props.product.cost}
-              <br />
-              {`${props.apiHost}${props.product.image_filename}`}
-            </p>
-            <p className="card-text">{props.product.description}</p>
-          </div>
+        {/* Card Body */}
+        <div className="card-body d-flex flex-column bg-secondary text-white">
+          {/* Product Name */}
+          <h5 className="card-title fw-bold">{props.product.name}</h5>
 
-          {/* {props.showLinks && (
-            <div className="position-absolute top-0 end-0">
-              <Link
-                to={`/update/${props.product.id}`}
-                className="btn btn-light btn-sm bg-secondary"
-              >
-                <i className="bi bi-pencil"></i>
-              </Link>
-              &nbsp;
-              <Link
-                to={`/delete/${props.product.id}`}
-                className="btn btn-light btn-sm bg-secondary"
-              >
-                <i className="bi bi-trash"></i>
-              </Link>
-            </div>
-          )} */}
+          {/* Product Description */}
+          <p
+            className="card-text text-truncate"
+            title={props.product.description}
+          >
+            {props.product.description}
+          </p>
+
+          {/* Product Price */}
+          <p className="card-text">
+            <strong>Cost:</strong> ${props.product.cost}
+          </p>
         </div>
-      </div>
+      </Link>
     </div>
   );
 }

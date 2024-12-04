@@ -86,9 +86,7 @@ export default function Cart() {
 
   // CALC TOTALS & TAX
   const subtotal = products.reduce(
-    (acc, product) => acc + product.quantity * product.cost,
-    0
-  );
+    (acc, product) => acc + product.quantity * product.cost, 0);
   const tax = subtotal * taxRate;
   const total = subtotal + tax;
 

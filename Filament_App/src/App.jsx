@@ -1,22 +1,30 @@
-import { Outlet } from 'react-router-dom';
-import Nav from './ui/Nav';
+import { Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Nav from "./ui/Nav";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    console.log("App: isLoggedIn state:", isLoggedIn);
+  }, [isLoggedIn]);
 
   return (
     <>
-      <h1>Filaments Express</h1>
-      <p>Your one stop shop for all of your filament needs!</p>
+      <header className="bg-primary text-white py-5">
+        <div className="container text-center">
+          <h1 className="display-4 fw-bold">Filaments Express</h1>
+          <p className="lead">
+            Your one-stop shop for all filament needs!
+          </p>
+        </div>
+      </header>
 
       <div>
-        <Nav />
+        <Nav isLoggedIn={isLoggedIn} />
       </div>
-
-      <br />
-      <br />
-      <hr />
       <div>
-        <Outlet />
+        <Outlet context={{ setIsLoggedIn }} />
       </div>
     </>
   );

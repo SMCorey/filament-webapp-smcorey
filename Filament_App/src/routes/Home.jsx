@@ -1,6 +1,5 @@
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Card from "/src/ui/Card.jsx";  
+import Card from "/src/ui/Card.jsx";
 
 export default function Home() {
   const apiHost = import.meta.env.VITE_API_HOST;
@@ -8,7 +7,6 @@ export default function Home() {
   const [loading, setLoading] = useState(true); // Track loading state
   const [error, setError] = useState(null); // Track error state
 
-  // const apiUrl = "http://localhost:3000/api/products/all";
   const apiUrl = apiHost + "api/products/all";
 
   // FETCH ALL PRODUCT DATA
@@ -16,14 +14,13 @@ export default function Home() {
     async function fetchData() {
       try {
         const response = await fetch(apiUrl);
-  
+
         if (!response.ok) {
-          // Log the error and provide feedback without throwing
           console.error(`Fetch failed with status: ${response.status}`);
           setError("Failed to load products. Please try again later.");
           return;
         }
-  
+
         const data = await response.json();
         setProducts(data);
       } catch (err) {
@@ -34,36 +31,43 @@ export default function Home() {
       }
     }
 
-    document.body.style.back;
-
-    let ignore = false;
     fetchData();
-    return () => {
-      ignore = true;
-    };
   }, []);
 
-    // LOADING OR ERROR RETURNS
-    if (loading) return <p>Loading Products...</p>;
-    if (error) return <p>Error: {error}</p>;
+  // LOADING OR ERROR STATES
+  if (loading) {
+    return (
+      <div className="bg-dark text-white min-vh-100 d-flex align-items-center justify-content-center">
+        <p className="text-center fs-4">Loading Products...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-dark text-white min-vh-100 d-flex align-items-center justify-content-center">
+        <p className="text-danger text-center fs-4">{error}</p>
+      </div>
+    );
+  }
 
   return (
-    <>
-      <div className="bg-dark text-white min-vh-100">
-        <h1 className="text-center fw-bold">Filaments</h1>
-        <div className="row row-cols-1 row-cols-md-2 g-2">
+    <div className="bg-dark text-white min-vh-100 py-5">
+      <div className="container">
+        <h1 className="text-center display-4 fw-bold mb-5">Our Products</h1>
+        <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
           {/* DISPLAY CARDS FOR ALL PRODUCTS */}
           {products.length > 0 ? (
             products.map((product) => (
-              <div className="col">
+              <div className="col" key={product.id}>
                 <Card product={product} apiHost={apiHost} showLinks={true} />
               </div>
             ))
           ) : (
-            <p>No products.</p>
+            <p className="text-center fs-5">No products available.</p>
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
