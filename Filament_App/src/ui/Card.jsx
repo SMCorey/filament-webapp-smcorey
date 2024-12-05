@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 export default function Card(props) {
   return (
     <div className="card shadow-sm h-100">
-      {/* Entire card wrapped in Link */}
+      {/* WHOLE CARD IS LINK */}
       <Link
         to={`/details/${props.product.product_id}`}
         className="text-decoration-none"
-        style={{ color: "inherit" }} // Prevent blue link styling / inherits text details from card
+        style={{ color: "inherit" }} // {PREVENTS HYPERLINK BLUE}
       >
-        {/* Image Section */}
+        {/* IMAGE */}
         <img
           src={`${props.apiHost}${props.product.image_filename}`}
           className="card-img-top"
@@ -17,12 +17,11 @@ export default function Card(props) {
           alt={`Image of ${props.product.name}`}
         />
 
-        {/* Card Body */}
         <div className="card-body d-flex flex-column bg-secondary text-white">
-          {/* Product Name */}
+          {/* NAME */}
           <h5 className="card-title fw-bold">{props.product.name}</h5>
 
-          {/* Product Description */}
+          {/* DESCRIPTION */}
           <p
             className="card-text text-truncate"
             title={props.product.description}
@@ -30,7 +29,7 @@ export default function Card(props) {
             {props.product.description}
           </p>
 
-          {/* Product Price */}
+          {/* PRICE */}
           <p className="card-text">
             <strong>Cost:</strong> ${props.product.cost}
           </p>

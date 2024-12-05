@@ -43,9 +43,6 @@ model Purchase {
   credit_card   String?
   credit_expire String?
   credit_cvv    String?
-  invoice_amt   Decimal
-  invoice_tax   Decimal
-  invoice_total Decimal
   order_date    DateTime @default(now())
 
   user          User     @relation(fields: [customer_id], references: [customer_id])

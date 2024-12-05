@@ -7,9 +7,10 @@ export default function Logout() {
 
   const [responseError, setResponseError] = useState(null);
   const [responseGood, setResponseGood] = useState(null);
-  const { setIsLoggedIn } = useOutletContext();
-  const navigate = useNavigate(); // Use useNavigate for navigation
+  const { setIsLoggedIn, setSessionData } = useOutletContext();
+  const navigate = useNavigate();
 
+  // API POST REQUEST
   async function postLogout() {
     try {
       const response = await fetch(apiUrl, {
@@ -17,48 +18,53 @@ export default function Logout() {
         credentials: "include",
       });
 
-      // Handle response
+      // HANDLE SESSION DESTROY AND LOGOUT
       if (response.ok) {
         setResponseGood(`Logout Successful! - ${response.statusText}`);
         setResponseError(null); // Clear any previous errors
         setIsLoggedIn(false);
+        setSessionData(null);
       } else {
         setResponseError(
           `Error: Could not log user out - ${response.statusText}`
         );
-        setResponseGood(null); // Clear any previous success messages
+        setResponseGood(null); 
       }
     } catch (error) {
       setResponseError(`Error: ${error.message}`);
-      setResponseGood(null); // Clear any previous success messages
+      setResponseGood(null); 
     }
   }
 
   return (
     <div className="d-flex flex-column align-items-center">
       <h1 className="mb-4">Logout</h1>
+      {/* FEEDBACK ON SUCCESSFUL LOGOUT */}
       {responseGood && (
         <h2 className="text-center text-success">{responseGood}</h2>
       )}
+      {/* FEEDBACK ON LOGOUT ISSUES */}
       {responseError && (
         <h2 className="text-center text-danger">{responseError}</h2>
       )}
+
       <div className="d-flex gap-3">
+        {/* LOGOUT */}
         <button onClick={postLogout} type="button" className="btn btn-danger">
           Logout
         </button>
+
+        {/* HOME */}
         <button
-          onClick={() => navigate("/")} // Navigate to Home
+          onClick={() => navigate("/")}
           type="button"
           className="btn btn-primary"
         >
           Home
         </button>
-        <button
-          onClick={() => navigate("/login")} // Navigate to Login
-          type="button"
-          className="btn btn-primary"
-        >
+
+        {/* LOGIN */}
+        <button onClick={() => navigate("/login")} className="btn btn-primary">
           Login
         </button>
       </div>

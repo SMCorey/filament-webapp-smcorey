@@ -71,10 +71,7 @@ router.post("/purchase", async (req, res) => {
     !credit_card ||
     !credit_expire ||
     !credit_cvv ||
-    !cart ||
-    !invoice_amt ||
-    !invoice_tax ||
-    !invoice_total
+    !cart
   ) {
     return res.status(400).send("Missing required purchase field(s).");
   }
@@ -100,9 +97,6 @@ router.post("/purchase", async (req, res) => {
       credit_card,
       credit_expire,
       credit_cvv,
-      invoice_amt: parseFloat(invoice_amt),
-      invoice_tax: parseFloat(invoice_tax),
-      invoice_total: parseFloat(invoice_total),
       order_date: new Date(),
     },
   });

@@ -20,7 +20,7 @@ export const useCartCookie = () => {
     const currentCart = cookies.cart ? cookies.cart : [];
     const index = currentCart.indexOf(productId);
     if (index !== -1) {
-      currentCart.splice(index, 1); // Remove only the first occurrence
+      currentCart.splice(index, 1);
       setCookie('cart', currentCart, { path: '/', maxAge: maxDays });
     }
   };

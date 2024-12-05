@@ -16,14 +16,16 @@ export default function Login() {
     formState: { errors },
   } = useForm();
 
-  function login(data) {
-    console.log(data);
 
+  function login(data) {
+
+    // FORM BODY PREP
     const formData = new URLSearchParams({
       email: data.email,
       password: data.password,
     }).toString();
 
+    // POST REQUEST
     async function postLogin() {
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -43,7 +45,6 @@ export default function Login() {
         );
       }
     }
-
     postLogin();
   }
 
@@ -53,10 +54,12 @@ export default function Login() {
         <h1 className="display-4 fw-bold mt-4">Login</h1>
         <p className="lead">Login to checkout!</p>
 
+        {/* ERROR MESSAGE IF LOGIN UNSUCCESSFUL */}
         {responseError && (
           <h2 className="text-danger">{responseError}</h2>
         )}
 
+        {/* FORM START */}
         <form
           onSubmit={handleSubmit(login)}        
           method="post"
@@ -64,6 +67,7 @@ export default function Login() {
           className="mx-auto bg-dark-subtle text-dark p-4 rounded shadow"
           style={{ maxWidth: "500px" }}
         >
+          {/* EMAIL */}
           <div className="mb-4">
             <label className="form-label">Email</label>
             <input
@@ -76,6 +80,7 @@ export default function Login() {
             )}
           </div>
 
+            {/* PASSWORD */}
           <div className="mb-4">
             <label className="form-label">Password</label>
             <input

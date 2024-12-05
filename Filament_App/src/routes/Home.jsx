@@ -4,8 +4,8 @@ import Card from "/src/ui/Card.jsx";
 export default function Home() {
   const apiHost = import.meta.env.VITE_API_HOST;
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true); // Track loading state
-  const [error, setError] = useState(null); // Track error state
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const apiUrl = apiHost + "api/products/all";
 

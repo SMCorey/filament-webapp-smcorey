@@ -86,11 +86,19 @@ router.post('/login', async (req,res) => {
   res.send('Login successful');
 });
 
-router.post('/logout', (req,res) => {
-  req.session.destroy();
-  res.clearCookie('connect.sid', "/");
-  res.send('Successful logout');
+router.post('/logout', (req, res) => {
+  // DESTROY SESSION
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error destroying session:', err);
+      return res.status(500).send('Logout failed.');
+    }
+    // CLEAR COOKIE
+    res.clearCookie('connect.sid', { path: '/' }); 
+    res.send('Successful logout');
+  });
 });
+
 
 router.get('/getSession', (req, res) => {
   // CHECK IF SESSION EXISTS & GET SESSION DETAILS

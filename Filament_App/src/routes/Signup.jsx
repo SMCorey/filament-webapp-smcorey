@@ -15,8 +15,8 @@ export default function Signup() {
   } = useForm();
 
   function signup(data) {
-    console.log(data);
 
+    // BODY CONSTRUCTION
     const formData = new URLSearchParams({
       firstName: data.first_name,
       lastName: data.last_name,
@@ -24,6 +24,7 @@ export default function Signup() {
       password: data.password,
     }).toString();
 
+    // API POST REQUEST
     async function postData() {
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -41,7 +42,6 @@ export default function Signup() {
         );
       }
     }
-
     postData();
   }
 
@@ -51,15 +51,19 @@ export default function Signup() {
         <h1 className="display-4 fw-bold mb-4 mt-4">Create an Account</h1>
         <p className="lead mb-4">Join us to enjoy personalized services and great offers.</p>
 
+        {/* ISSUES FEEDBACK */}
         {responseError && (
           <p className="text-danger mb-4">{responseError}</p>
         )}
 
+        {/* FORM START */}
         <form
           onSubmit={handleSubmit(signup)}
           className="mx-auto bg-dark-subtle text-dark p-4 rounded shadow"
           style={{ maxWidth: "500px" }}
         >
+
+          {/* FIRST NAME */}
           <div className="mb-3">
             <label className="form-label fw-bold">First Name</label>
             <input
@@ -72,6 +76,7 @@ export default function Signup() {
             )}
           </div>
 
+            {/* LAST NAME */}
           <div className="mb-3">
             <label className="form-label fw-bold">Last Name</label>
             <input
@@ -84,6 +89,7 @@ export default function Signup() {
             )}
           </div>
 
+            {/* EMAIL */}
           <div className="mb-3">
             <label className="form-label fw-bold">Email</label>
             <input
@@ -96,13 +102,15 @@ export default function Signup() {
             )}
           </div>
 
+            {/* PASSWORD */}
           <div className="mb-3">
             <label className="form-label fw-bold">Password</label>
             <input
               {...register("password", {
                 required: "Password required.",
-                validate: {
+                validate: { // note: could use same password validator as backend
                   validFormat: (value) =>
+                    // REGEX FROM: https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
                     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/.test(
                       value
                     ) ||
@@ -119,6 +127,7 @@ export default function Signup() {
             )}
           </div>
 
+            {/* SIGNUP & CANCEL */}
           <div className="d-flex justify-content-center gap-3">
             <button type="submit" className="btn btn-success px-4">
               Signup
