@@ -1,6 +1,6 @@
 import { useCookies } from "react-cookie";
 import { useOutletContext, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Checkout() {
@@ -35,29 +35,32 @@ export default function Checkout() {
       ...data,
       cart: cartItems,
     }).toString();
+   try{
+     // API POST REQUEST
+     fetch(apiUrl, {
+       method: 'POST',
+       credentials: 'include', 
+       headers: { "Content-Type": "application/x-www-form-urlencoded" },
+       body,
+     })
+       .then((response) => {
+         if (response.ok) {
+           // CLEAR CART COOKIE & REDIRECT ON SUCCESS
+           removeCookie('cart'); 
+           navigate('/confirmation');
+         } else {
+           setResponseError(
+             `Error: Could complete checkout - ${response.statusText}`
+           );
+         }
+       })
+      }
+      catch (err) {
+        console.error("Error fetching data:", err);
+        setResponseError("An error occurred while loading products.");
+      }
 
-    // API POST REQUEST
-    fetch(apiUrl, {
-      method: 'POST',
-      credentials: 'include', 
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body,
-    })
-      .then((response) => {
-        if (response.ok) {
-          // CLEAR CART COOKIE & REDIRECT ON SUCCESS
-          removeCookie('cart'); 
-          navigate('/confirmation');
-        } else {
-          setResponseError(
-            `Error: Could complete checkout - ${response.statusText}`
-          );
-        }
-      })
-      .catch((err) => {
-        console.error(err.message);
-      });
-  };
+   }
 
   // IN NAV/REDIRECT TOO SLOW
   if (!isLoggedIn) {

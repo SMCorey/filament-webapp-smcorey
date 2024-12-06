@@ -2,6 +2,7 @@
 // Styling pulled from Bootstrap examples & docs
 // https://getbootstrap.com/docs/5.3/getting-started/introduction/
 
+
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Nav from "./ui/Nav";
